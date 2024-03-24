@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "YassirTrendingMovies"
 include(":app")
- 
+include(":trendingmovies")
