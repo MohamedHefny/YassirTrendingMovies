@@ -5,8 +5,8 @@ import com.example.trendingmovies.domain.models.MovieDetails
 
 interface MoviesRepository {
 
-    fun getTrendingMovies(): List<Movie>
+    suspend fun getTrendingMovies(): List<Movie>
 
-    fun getMovieDetails(movieId: Int): MovieDetails
+    suspend fun getMovieDetails(movieId: Int): MovieDetails
 
 }

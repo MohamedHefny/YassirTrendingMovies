@@ -5,8 +5,8 @@ import com.example.trendingmovies.domain.models.MovieDetails
 
 interface RemoteSource {
 
-    fun fetchMovies(): List<Movie>
+    suspend fun fetchMovies(): List<Movie>
 
-    fun fetchMovieDetails(): MovieDetails
+    suspend fun fetchMovieDetails(): MovieDetails
 
 }

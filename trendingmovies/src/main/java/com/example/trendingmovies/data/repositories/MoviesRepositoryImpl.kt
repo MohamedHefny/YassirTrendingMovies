@@ -10,11 +10,11 @@ class MoviesRepositoryImpl(
     private val remoteSource: RemoteSource = RemoteSourceImpl()
 ) : MoviesRepository {
 
-    override fun getTrendingMovies(): List<Movie> {
+    override suspend fun getTrendingMovies(): List<Movie> {
         return remoteSource.fetchMovies()
     }
 
-    override fun getMovieDetails(movieId: Int): MovieDetails {
+    override suspend fun getMovieDetails(movieId: Int): MovieDetails {
         return remoteSource.fetchMovieDetails()
     }
 

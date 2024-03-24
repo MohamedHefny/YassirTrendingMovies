@@ -5,11 +5,11 @@ import com.example.trendingmovies.domain.models.MovieDetails
 
 class RemoteSourceImpl : RemoteSource {
 
-    override fun fetchMovies(): List<Movie> {
+    override suspend fun fetchMovies(): List<Movie> {
         TODO("Not yet implemented")
     }
 
-    override fun fetchMovieDetails(): MovieDetails {
+    override suspend fun fetchMovieDetails(): MovieDetails {
         TODO("Not yet implemented")
     }
 }
