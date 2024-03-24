@@ -7,6 +7,6 @@ interface RemoteSource {
 
     suspend fun fetchMovies(): List<Movie>
 
-    suspend fun fetchMovieDetails(): MovieDetails
+    suspend fun fetchMovieDetails(movieId: Int): MovieDetails
 
 }

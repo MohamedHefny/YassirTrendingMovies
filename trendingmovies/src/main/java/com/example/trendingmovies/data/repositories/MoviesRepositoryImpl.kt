@@ -15,7 +15,7 @@ class MoviesRepositoryImpl(
     }
 
     override suspend fun getMovieDetails(movieId: Int): MovieDetails {
-        return remoteSource.fetchMovieDetails()
+        return remoteSource.fetchMovieDetails(movieId)
     }
 
 }
