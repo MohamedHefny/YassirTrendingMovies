@@ -1,5 +1,6 @@
 package com.example.trendingmovies.data.remote
 
+import com.example.trendingmovies.data.remote.models.MovieResponse
 import com.example.trendingmovies.domain.models.Movie
 import com.example.trendingmovies.domain.models.MovieDetails
 
@@ -8,10 +9,19 @@ class RemoteSourceImpl(
 ) : RemoteSource {
 
     override suspend fun fetchMovies(): List<Movie> {
-        return trendingMoviesService.fetchMovies()
+        val movieResult = trendingMoviesService.fetchMovies()
+        return mapRemoteMovie(movieResult)
     }
 
     override suspend fun fetchMovieDetails(movieId: Int): MovieDetails {
         return trendingMoviesService.fetchMovieDetails(movieId)
+    }
+
+    private fun mapRemoteMovie(movieResponse: MovieResponse): List<Movie> {
+        val movies = mutableListOf<Movie>()
+        movieResponse.movies.forEach {
+            movies.add(Movie(it.id, it.title, it.posterPath, it.releaseDate))
+        }
+        return movies
     }
 }

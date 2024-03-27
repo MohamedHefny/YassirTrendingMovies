@@ -12,17 +12,16 @@ object RetrofitClient {
     private const val API_KEY_VALUE = BuildConfig.API_KEY
     private const val BASE_URL = "https://api.themoviedb.org/3/"
 
-    private val authInterceptor = Interceptor { chain ->
+    private val authInterceptor: Interceptor = Interceptor { chain ->
         val authenticatedRequest = with(chain.request()) {
-            val newUrl = url().newBuilder().addQueryParameter(API_KEY, API_KEY_VALUE).build()
+            val newUrl = url.newBuilder().addQueryParameter(API_KEY, API_KEY_VALUE).build()
             return@with newBuilder().url(newUrl).build()
         }
         chain.proceed(authenticatedRequest)
     }
 
-    private val okHttpClient = OkHttpClient().apply {
-        interceptors().add(authInterceptor)
-    }
+    private val okHttpClient = OkHttpClient().newBuilder()
+        .apply { interceptors().add(authInterceptor) }.build()
 
     private val retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
