@@ -29,7 +29,7 @@ import com.example.trendingmovies.presentation.common.LoadingIndicator
 import com.example.trendingmovies.presentation.navigation.TrendingMoviesScreens
 
 @Composable
-fun TrendingMoviesScreen(navController: NavController, modifier: Modifier = Modifier) {
+internal fun TrendingMoviesScreen(navController: NavController, modifier: Modifier = Modifier) {
     val moviesViewModel: TrendingMoviesViewModel =
         viewModel(factory = ServiceLocator.trendingMoviesViewModelFactory)
     val uiState = moviesViewModel.movieListState.collectAsState()
@@ -45,7 +45,7 @@ fun TrendingMoviesScreen(navController: NavController, modifier: Modifier = Modi
 }
 
 @Composable
-fun TrendingMovies(
+private fun TrendingMovies(
     movies: List<Movie>,
     navController: NavController,
     modifier: Modifier = Modifier
@@ -67,7 +67,7 @@ fun TrendingMovies(
 }
 
 @Composable
-fun MovieItem(movie: Movie, modifier: Modifier = Modifier) {
+private fun MovieItem(movie: Movie, modifier: Modifier = Modifier) {
     Row(modifier = modifier.fillMaxWidth()) {
         AsyncImage(
             model = movie.posterUrl,

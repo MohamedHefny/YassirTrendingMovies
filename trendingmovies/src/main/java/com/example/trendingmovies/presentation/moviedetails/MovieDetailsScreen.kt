@@ -26,7 +26,7 @@ import com.example.trendingmovies.presentation.common.LoadingIndicator
 import com.example.trendingmovies.presentation.common.showSnackbar
 
 @Composable
-fun MovieDetailsScreen(
+internal fun MovieDetailsScreen(
     movieId: Int,
     modifier: Modifier = Modifier
 ) {
@@ -47,7 +47,7 @@ fun MovieDetailsScreen(
 }
 
 @Composable
-fun MovieDetails(
+private fun MovieDetails(
     movie: MovieDetails,
     modifier: Modifier = Modifier
 ) {
