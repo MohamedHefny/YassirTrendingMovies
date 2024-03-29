@@ -1,26 +1,27 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
-    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.kotlin.ksp)
+    alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
 }
 
 android {
-    namespace = "com.example.yassirtrendingmovies"
+    namespace = "com.example.trendingmovies"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.yassirtrendingmovies"
         minSdk = 24
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
+        buildFeatures.buildConfig = true
+        val apiKey = gradleLocalProperties(rootDir, providers).getProperty("API_KEY")
+        forEach { buildType -> buildType.buildConfigField("String", "API_KEY", apiKey) }
+
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -42,31 +43,33 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
     }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
 }
 
 dependencies {
-    implementation(project(":trendingmovies"))
+
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.ktx)
+    implementation(libs.androidx.appcompat)
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.material)
+
+    implementation(libs.navigation.compose)
+
+    implementation(libs.room.database)
+    ksp(libs.room.database.compiler)
+
+    implementation(libs.retrofit)
+    implementation(libs.json.converter)
+    implementation(libs.coil.image.loading.compose)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
 }

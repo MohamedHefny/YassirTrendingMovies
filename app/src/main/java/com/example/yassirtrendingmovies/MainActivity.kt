@@ -4,12 +4,15 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import com.example.trendingmovies.di.ServiceLocator
+import com.example.trendingmovies.presentation.navigation.TrendingMoviesApp
 import com.example.yassirtrendingmovies.ui.theme.YassirTrendingMoviesTheme
 
 class MainActivity : ComponentActivity() {
@@ -17,30 +20,17 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             YassirTrendingMoviesTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
+                val coroutineScope = rememberCoroutineScope()
+                val snackbarHostState = remember { SnackbarHostState() }
+                ServiceLocator.setupSnackbar(snackbarHostState, coroutineScope)
+
+                Scaffold(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
+                    snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
+                ) { contentPadding ->
+                    TrendingMoviesApp(modifier = Modifier.padding(contentPadding))
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    YassirTrendingMoviesTheme {
-        Greeting("Android")
     }
 }
