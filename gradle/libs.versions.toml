@@ -1,6 +1,7 @@
 [versions]
 agp = "8.3.1"
 kotlin = "1.9.0"
+ksp = "1.9.0-1.0.13"
 coreKtx = "1.12.0"
 junit = "4.13.2"
 junitVersion = "1.1.5"
@@ -12,6 +13,7 @@ composeBom = "2024.03.00"
 appcompat = "1.6.1"
 material = "1.11.0"
 navigation = "2.7.7"
+roomDb = "2.6.1"
 retrofit = "2.10.0"
 coil = "2.6.0"
 
@@ -36,6 +38,8 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
+room-database = { group = "androidx.room", name = "room-runtime", version.ref = "roomDb" }
+room-database-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomDb" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 json-converter = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
 coil-image-loading-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
@@ -44,3 +48,4 @@ coil-image-loading-compose = { group = "io.coil-kt", name = "coil-compose", vers
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
+kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

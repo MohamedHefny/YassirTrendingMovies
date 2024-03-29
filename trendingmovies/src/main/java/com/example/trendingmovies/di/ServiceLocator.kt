@@ -1,9 +1,13 @@
 package com.example.trendingmovies.di
 
+import android.content.Context
 import androidx.compose.material3.SnackbarHostState
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.example.trendingmovies.data.local.MoviesLocalSource
+import com.example.trendingmovies.data.local.MoviesLocalSourceImpl
+import com.example.trendingmovies.data.local.room.TrendingMoviesDatabase
 import com.example.trendingmovies.data.remote.RemoteSource
 import com.example.trendingmovies.data.remote.RemoteSourceImpl
 import com.example.trendingmovies.data.remote.RetrofitClient
@@ -17,6 +21,8 @@ import com.example.trendingmovies.presentation.trendingmovies.TrendingMoviesView
 import kotlinx.coroutines.CoroutineScope
 
 object ServiceLocator {
+
+    var appContext: Context? = null
 
     private var moviesRepository: MoviesRepository? = null
 
@@ -40,10 +46,17 @@ object ServiceLocator {
 
     private fun getOrCreateMoviesRepository(): MoviesRepository {
         if (moviesRepository == null) {
+            if (appContext == null)
+                throw Exception("Cannot instantiate movies repository while app context is null")
+
             val networkService = RetrofitClient.trendingMoviesService
             val remoteSource: RemoteSource = RemoteSourceImpl(networkService)
+            val roomDatabase = TrendingMoviesDatabase.getDatabase(appContext!!)
+            val localSource: MoviesLocalSource = MoviesLocalSourceImpl(roomDatabase)
+
             moviesRepository = MoviesRepositoryImpl(
-                remoteSource, RemoteMovieMapper(), RemoteMovieDetailsMapper()
+                remoteSource, localSource,
+                RemoteMovieMapper(), RemoteMovieDetailsMapper()
             )
         }
         return moviesRepository!!

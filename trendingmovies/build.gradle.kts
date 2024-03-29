@@ -1,6 +1,7 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
 plugins {
+    alias(libs.plugins.kotlin.ksp)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
 }
@@ -60,6 +61,9 @@ dependencies {
     implementation(libs.material)
 
     implementation(libs.navigation.compose)
+
+    implementation(libs.room.database)
+    ksp(libs.room.database.compiler)
 
     implementation(libs.retrofit)
     implementation(libs.json.converter)
