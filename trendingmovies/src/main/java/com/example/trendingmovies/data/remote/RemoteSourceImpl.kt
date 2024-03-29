@@ -2,27 +2,14 @@ package com.example.trendingmovies.data.remote
 
 import com.example.trendingmovies.data.remote.models.MovieDetailsResponse
 import com.example.trendingmovies.data.remote.models.MovieResponse
-import com.example.trendingmovies.domain.models.Movie
 
-class RemoteSourceImpl(
-    private val trendingMoviesService: TrendingMoviesService = RetrofitClient.trendingMoviesService
-) : RemoteSource {
+class RemoteSourceImpl(private val trendingMoviesService: TrendingMoviesService) : RemoteSource {
 
-    override suspend fun fetchMovies(): List<Movie> {
-        val movieResult = trendingMoviesService.fetchMovies()
-        return mapRemoteMovie(movieResult)
+    override suspend fun fetchMovies(): MovieResponse {
+        return trendingMoviesService.fetchMovies()
     }
 
     override suspend fun fetchMovieDetails(movieId: Int): MovieDetailsResponse {
         return trendingMoviesService.fetchMovieDetails(movieId)
-    }
-
-    private fun mapRemoteMovie(movieResponse: MovieResponse): List<Movie> {
-        val movies = mutableListOf<Movie>()
-        movieResponse.movies.forEach {
-            val posterUrl = RetrofitClient.POSTERS_BASE_URL + it.posterPath
-            movies.add(Movie(it.id, it.title, posterUrl, it.releaseDate))
-        }
-        return movies
     }
 }
