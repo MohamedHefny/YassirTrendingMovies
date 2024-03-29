@@ -11,6 +11,7 @@ object RetrofitClient {
     private const val API_KEY = "api_key"
     private const val API_KEY_VALUE = BuildConfig.API_KEY
     private const val BASE_URL = "https://api.themoviedb.org/3/"
+    internal const val POSTERS_BASE_URL = "https://image.tmdb.org/t/p/w500"
 
     private val authInterceptor: Interceptor = Interceptor { chain ->
         val authenticatedRequest = with(chain.request()) {

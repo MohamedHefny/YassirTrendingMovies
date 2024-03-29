@@ -20,7 +20,8 @@ class RemoteSourceImpl(
     private fun mapRemoteMovie(movieResponse: MovieResponse): List<Movie> {
         val movies = mutableListOf<Movie>()
         movieResponse.movies.forEach {
-            movies.add(Movie(it.id, it.title, it.posterPath, it.releaseDate))
+            val posterUrl = RetrofitClient.POSTERS_BASE_URL + it.posterPath
+            movies.add(Movie(it.id, it.title, posterUrl, it.releaseDate))
         }
         return movies
     }
