@@ -7,18 +7,23 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.trendingmovies.data.repositories.MoviesRepositoryImpl
 import com.example.trendingmovies.domain.repositories.MoviesRepository
 import com.example.trendingmovies.presentation.common.SnackbarDelegate
+import com.example.trendingmovies.presentation.moviedetails.MovieDetailsViewModel
 import com.example.trendingmovies.presentation.trendingmovies.TrendingMoviesViewModel
 import kotlinx.coroutines.CoroutineScope
 
 object ServiceLocator {
 
+    private val moviesRepository: MoviesRepository = MoviesRepositoryImpl()
+
+
     internal var snackbarDelegate: SnackbarDelegate? = null
 
     val trendingMoviesViewModelFactory: ViewModelProvider.Factory = viewModelFactory {
-        initializer {
-            val moviesRepository: MoviesRepository = MoviesRepositoryImpl()
-            TrendingMoviesViewModel(moviesRepository)
-        }
+        initializer { TrendingMoviesViewModel(moviesRepository) }
+    }
+
+    val movieDetailsViewModelFactory: ViewModelProvider.Factory = viewModelFactory {
+        initializer { MovieDetailsViewModel(moviesRepository) }
     }
 
     fun setupSnackbar(

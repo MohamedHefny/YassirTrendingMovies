@@ -1,8 +1,8 @@
 package com.example.trendingmovies.data.remote
 
+import com.example.trendingmovies.data.remote.models.MovieDetailsResponse
 import com.example.trendingmovies.data.remote.models.MovieResponse
 import com.example.trendingmovies.domain.models.Movie
-import com.example.trendingmovies.domain.models.MovieDetails
 
 class RemoteSourceImpl(
     private val trendingMoviesService: TrendingMoviesService = RetrofitClient.trendingMoviesService
@@ -13,7 +13,7 @@ class RemoteSourceImpl(
         return mapRemoteMovie(movieResult)
     }
 
-    override suspend fun fetchMovieDetails(movieId: Int): MovieDetails {
+    override suspend fun fetchMovieDetails(movieId: Int): MovieDetailsResponse {
         return trendingMoviesService.fetchMovieDetails(movieId)
     }
 

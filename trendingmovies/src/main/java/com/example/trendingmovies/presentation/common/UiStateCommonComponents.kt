@@ -8,6 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.example.trendingmovies.di.ServiceLocator
 
 @Composable
 fun LoadingIndicator() {
@@ -19,4 +20,8 @@ fun LoadingIndicator() {
         CircularProgressIndicator()
         Text(text = "Loading movies...")
     }
+}
+
+fun showSnackbar(message: String) {
+    ServiceLocator.snackbarDelegate?.showSnackbar(message)
 }
