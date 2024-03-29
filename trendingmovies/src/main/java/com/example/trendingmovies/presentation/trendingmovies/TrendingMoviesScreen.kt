@@ -1,5 +1,6 @@
 package com.example.trendingmovies.presentation.trendingmovies
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -20,13 +21,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.trendingmovies.di.ServiceLocator
 import com.example.trendingmovies.domain.models.Movie
 import com.example.trendingmovies.presentation.common.LoadingIndicator
+import com.example.trendingmovies.presentation.navigation.TrendingMoviesScreens
 
 @Composable
-fun TrendingMoviesScreen(modifier: Modifier = Modifier) {
+fun TrendingMoviesScreen(navController: NavController, modifier: Modifier = Modifier) {
     val moviesViewModel: TrendingMoviesViewModel =
         viewModel(factory = ServiceLocator.trendingMoviesViewModelFactory)
     val uiState = moviesViewModel.movieListState.collectAsState()
@@ -35,26 +38,37 @@ fun TrendingMoviesScreen(modifier: Modifier = Modifier) {
         TrendingMoviesUiState.Initial -> Box(modifier)
         TrendingMoviesUiState.Loading -> LoadingIndicator()
         is TrendingMoviesUiState.Error -> ServiceLocator.snackbarDelegate?.showSnackbar(state.message)
-        is TrendingMoviesUiState.TrendingMovies -> TrendingMovies(modifier, state.movies)
+        is TrendingMoviesUiState.TrendingMovies -> TrendingMovies(
+            state.movies, navController, modifier
+        )
     }
 }
 
 @Composable
-fun TrendingMovies(modifier: Modifier = Modifier, movies: List<Movie>) {
+fun TrendingMovies(
+    movies: List<Movie>,
+    navController: NavController,
+    modifier: Modifier = Modifier
+) {
     LazyColumn(
         contentPadding = PaddingValues(start = 12.dp, end = 12.dp, top = 12.dp),
         modifier = modifier.fillMaxSize()
     ) {
         items(movies.size) {
-            MovieItem(movies[it])
+            val movie = movies[it]
+            val onMovieClicked = {
+                val detailsScreenRoute = TrendingMoviesScreens.MovieDetails.name
+                navController.navigate(detailsScreenRoute + "/${movie.id}")
+            }
+            MovieItem(movie, modifier = Modifier.clickable { onMovieClicked.invoke() })
             Spacer(modifier = Modifier.padding(top = 12.dp))
         }
     }
 }
 
 @Composable
-fun MovieItem(movie: Movie) {
-    Row(modifier = Modifier.fillMaxWidth()) {
+fun MovieItem(movie: Movie, modifier: Modifier = Modifier) {
+    Row(modifier = modifier.fillMaxWidth()) {
         AsyncImage(
             model = movie.posterUrl,
             contentDescription = "${movie.title} poster",

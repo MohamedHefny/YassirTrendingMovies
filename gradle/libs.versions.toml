@@ -11,6 +11,7 @@ androidxActivity = "1.8.2"
 composeBom = "2024.03.00"
 appcompat = "1.6.1"
 material = "1.11.0"
+navigation = "2.7.7"
 retrofit = "2.10.0"
 coil = "2.6.0"
 
@@ -34,6 +35,7 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 json-converter = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
 coil-image-loading-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
